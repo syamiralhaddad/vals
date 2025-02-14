@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Valentine's Day</title>
+    <style>
+        /* Background animasi */
+        body {
+            background: linear-gradient(-45deg, #ff9a9e, #fecfef, #fad0c4, #ffdde1);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            color: #d63384;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Container utama */
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 8px rgba(255, 105, 180, 0.6);
+            animation: fadeIn 2s ease-in-out;
+            margin-bottom: 70px;
+        }
+
+        /* Heart animation */
+        .heart {
+            width: 120px;
+            height: 120px;
+            background-color: #ff4d6d;
+            position: relative;
+            display: inline-block;
+            transform: rotate(-45deg);
+            animation: heartbeat 1.5s infinite ease-in-out, floating 3s infinite ease-in-out;
+            box-shadow: 0 0 20px rgba(255, 77, 109, 0.8);
+            margin-bottom: 40px;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            width: 120px;
+            height: 120px;
+            background-color: #ff4d6d;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .heart::before {
+            top: -60px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 60px;
+            top: 0;
+        }
+
+        /* Animasi heartbeat */
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1) rotate(-45deg); }
+            50% { transform: scale(1.15) rotate(-45deg); }
+        }
+
+        /* Animasi floating */
+        @keyframes floating {
+            0%, 100% { transform: translateY(0) rotate(-45deg); }
+            50% { transform: translateY(-10px) rotate(-45deg); }
+        }
+
+        /* Tombol */
+        .btn {
+            margin-top: 10px;
+            padding: 12px 24px;
+            font-size: 1.2rem;
+            background: linear-gradient(45deg, #ff69b4, #ff4d6d);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            box-shadow: 0px 4px 10px rgba(255, 105, 180, 0.4);
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+            z-index: 2; /* Pastikan tombol berada di atas */
+        }
+
+        .btn:hover {
+            background: linear-gradient(45deg, #ff4d6d, #d63384);
+            transform: scale(1.1);
+            box-shadow: 0px 6px 15px rgba(255, 105, 180, 0.6);
+        }
+
+        /* Efek Sparkle */
+        .sparkles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0; /* Pastikan sparkle di bawah tombol */
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: white;
+            box-shadow: 0 0 10px white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: sparkle 2s infinite ease-in-out;
+        }
+
+        @keyframes sparkle {
+            0% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0; transform: scale(0.5); }
+        }
+
+        /* Pesan cinta dengan animasi */
+        #message {
+            opacity: 0;
+            font-size: 1.8rem;
+            margin-top: 20px;
+            color: #ff4d6d;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px rgba(255, 77, 109, 0.6);
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            transform: translateY(-10px);
+            display: none;
+        }
+
+        #message.show {
+            opacity: 1;
+            transform: translateY(0);
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Efek Sparkle -->
+    <div class="sparkles"></div>
+
+    <div class="container">
+        <h1>Happy Valentine's Day, Ayaaang 💕</h1>
+        <div class="heart"></div>
+        <button class="btn" onclick="toggleMessage()">coba buka ini ayang hehe</button>
+        <p id="message">i love you ayang, syami sayang ayang 💖</p>
+        <a href="games.html" class="btn">quiz yang ayang wajib kerjain</a>
+    </div>
+
+    <script>
+        function toggleMessage() {
+            let message = document.getElementById('message');
+            if (message.classList.contains('show')) {
+                message.classList.remove('show'); // Sembunyikan pesan
+            } else {
+                message.classList.add('show'); // Tampilkan pesan
+            }
+        }
+
+        // Membuat efek sparkle
+        function createSparkles() {
+            const sparkleContainer = document.querySelector('.sparkles');
+            for (let i = 0; i < 30; i++) {
+                let sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkleContainer.appendChild(sparkle);
+            }
+        }
+
+        // Memanggil fungsi untuk membuat sparkle
+        createSparkles();
+    </script>
+</body>
+</html>

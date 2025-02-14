@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayo kita kuis >.< </title>
+    <style>
+        body {
+            background-color: #ffe4ec;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            color: #d63384;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #ff69b4;
+        }
+        .question {
+            font-size: 1.2rem;
+            margin: 20px 0;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+        button {
+            padding: 10px;
+            font-size: 1rem;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #d63384;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.3rem;
+            color: #d63384;
+        }
+        #nextButton {
+            margin-top: 30px;
+            padding: 10px;
+            font-size: 1rem;
+            background-color: #de0a26;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        #tryAgainButton {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            font-size: 1.2rem;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 50%;
+            text-align: center;
+        }
+        #tryAgainButton:hover {
+            background-color: #d63384;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Valentine's Quiz 💖</h1>
+        <div id="quiz">
+            <p class="question" id="question">Loading...</p>
+            <div class="options" id="options"></div>
+        </div>
+        <button id="nextButton" onclick="nextQuestion()">Next</button>
+        <p id="result"></p>
+        <button id="tryAgainButton" onclick="resetQuiz()">coba lagi!!</button>
+    </div>
+
+    <script>
+        const quizData = [
+            { 
+                question: "Tanggal berapa ayang pertama kali bilang i love you / confess", 
+                options: ["A. 22 Oktober 2021", "B. 22 November 2021", "C. 4 Oktober 2021", "D. 4 November 2021"], 
+                correct: "C" 
+            },
+            { 
+                question: "Syami paling seneng kalo ayang make baju .....", 
+                options: ["A. Lengan pendek", "B. Lengan panjang", "C. Apapun warna item", "D. Baju kek toji"], 
+                correct: "D" 
+            },
+            { 
+                question: "Date ketiga kita, kita kemana hayooo", 
+                options: ["A. Skyline", "B. Nonton Jujutsu", "C. Makan Hakata", "D. Nonton Sonic"], 
+                correct: "C" 
+            },
+            { 
+                question: "Makanan top 1 favorit kita berdua jatuh kepadaaa *drumroll* ", 
+                options: ["A. HONU", "B. Sushi Tei", "C. Artirasa", "D. Meatgasm"], 
+                correct: "A" 
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const quiz = quizData[currentQuestion];
+            document.getElementById("question").innerText = quiz.question;
+            const optionsDiv = document.getElementById("options");
+            optionsDiv.innerHTML = "";
+
+            quiz.options.forEach(option => {
+                const button = document.createElement("button");
+                button.innerText = option;
+                button.onclick = function() { checkAnswer(option[0]); };
+                optionsDiv.appendChild(button);
+            });
+        }
+
+        function checkAnswer(answer) {
+            if (answer === quizData[currentQuestion].correct) {
+                score++;
+            }
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showResult();
+                document.getElementById("nextButton").style.display = "none"; // Hide "Next" button
+            }
+        }
+
+        function showResult() {
+            document.getElementById("quiz").style.display = "none";
+            let message = "";
+            if (score === quizData.length) {
+                message = "ayang jago bener semua YEY! 💖";
+                document.getElementById("tryAgainButton").style.display = "none"; // Jangan tampilkan tombol "Try Again"
+            } else if (score >= quizData.length / 2) {
+                message = "masa cuman bener setengah 😊";
+                document.getElementById("tryAgainButton").style.display = "block";
+            } else {
+                message = "coba lagi ayang sampe bener semua 😜";
+                document.getElementById("tryAgainButton").style.display = "block";
+            }
+            document.getElementById("result").innerText = `Your Score: ${score}/${quizData.length}\n${message}`;
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById("quiz").style.display = "block";
+            document.getElementById("nextButton").style.display = "block"; // Show "Next" button again
+            document.getElementById("tryAgainButton").style.display = "none"; // Hide "Try Again" button
+            document.getElementById("result").innerText = "";
+            loadQuestion();
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
